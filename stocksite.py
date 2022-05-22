@@ -547,5 +547,5 @@ fig.update_xaxes(
                     dict(count=1, label="YTD", step="year", stepmode="todate"),
                     dict(label="Max", step="all")
                 ])
-            )
+            ) 
         )'''
