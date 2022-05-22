@@ -1,6 +1,3 @@
-from msilib.schema import RadioButton
-from re import M
-from requests import options
 import streamlit as st 
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as bs
@@ -23,6 +20,8 @@ from re import L
 import warnings
 from datetime import date
 import base64
+from re import M
+from requests import options
 today=date.today()
 def fxn():
     warnings.warn("deprecated", DeprecationWarning)
