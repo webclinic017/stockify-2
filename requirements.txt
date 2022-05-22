@@ -5,16 +5,8 @@ urllib3
 bs4
 plotly
 gunicorn
-re
 yfinance
 backtrader
 datetime
 matplotlib
-matplotlib.pyplot
-date
-rsi
-goldencrossover
 pandas_datareader
-warnings
-base64
-msilib.schema
