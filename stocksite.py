@@ -16,11 +16,9 @@ import datetime as dt
 import random
 import numpy as np
 import pandas_datareader as pdr
-from re import L
 import warnings
 from datetime import date
 import base64
-from re import M
 from requests import options
 today=date.today()
 def fxn():
