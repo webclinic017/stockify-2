@@ -1,13 +1,14 @@
 streamlit
+backtrader
+yfinance
 pandas
+pandas_datareader
 nltk
 urllib3
 bs4
 plotly
 gunicorn
-yfinance
-backtrader
 datetime
-matplotlib
-pandas_datareader
+quantstats
+matplotlib==3.2.2
 
