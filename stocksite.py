@@ -1,34 +1,25 @@
-import streamlit as st 
+import streamlit as st
+import backtrader as bt
+import yfinance as yf
+import pandas as pd
+import pandas_datareader as pdr
+import matplotlib.pyplot as plt
+import matplotlib
+import numpy as np
+import warnings
+from matplotlib import warnings
+from matplotlib.dates import (HOURS_PER_DAY, MIN_PER_HOUR, SEC_PER_MIN)
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as bs
-import pandas as pd
-import plotly
-import plotly.express as px
-import plotly.graph_objs as go
-import yfinance as yf
-import backtrader as bt
-import datetime
-import matplotlib
-import matplotlib.pyplot as plt
 from rsi import RSIStrategy
-from goldencrossover import goldencrossover
-import datetime as dt
-import random
-import numpy as np
-import pandas_datareader as pdr
-import warnings
 from datetime import date
-import base64
-from requests import options
-today=date.today()
 def fxn():
     warnings.warn("deprecated", DeprecationWarning)
-
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     fxn()
 st.set_option('deprecation.showPyplotGlobalUse', False)
-
+today=date.today()
 def backtestrsi():
     global strategy
     ticker=st.sidebar.text_input("Stock ticker", value="AAPL")
@@ -119,8 +110,9 @@ def volatility():
             ('volume', -1),
             ('openinterest', -1)
         )
-    df = yf.download(tickers=ticker, start=start, end=end, rounding= False)
+    #
     ticker=ticker
+    df = yf.download(tickers=ticker, start=start, end=end, rounding= False)
     df=df.reset_index() 
     df2 = yf.download(tickers='^VIX', start=start, end=end, rounding= False)
     df2.rename(columns = {'Open':'Vix Open', 'High':'Vix High', 'Low':'Vix Low', 'Close':'Vix Close'}, inplace = True)
@@ -128,23 +120,23 @@ def volatility():
     df2=df2.drop("Adj Close", axis=1)
     df2=df2.reset_index()
     df3=df2
-    df3.to_csv(r'C:\Users\Utki\Desktop\code\stock\trial.csv')
     df2=df2.drop("Date", axis=1)
     result=pd.concat([df, df2], axis=1, join='inner')
-    result.to_csv(r'C:\Users\Utki\Desktop\code\stock\trial2.csv')
-    result = pd.read_csv('trial2.csv')
+    results=result
+    df3.to_csv(r'https://github.com/Utkarshhh20/trial/blob/main/trial.csv')
+    results.to_csv(r'https://github.com/Utkarshhh20/trial/blob/main/trial2.csv')
+    first_column1 = results.columns[0]
+    results.to_csv('trial2.csv', index=False)
+    #results = pd.read_csv('trial2.csv')
     # If you know the name of the column skip this
-    first_column = result.columns[0]
     # Delete first
-    result = result.drop([first_column], axis=1)
-    result.to_csv('trial2.csv', index=False)
+    #result = result.drop([first_column], axis=1)
     # If you know the name of the column skip this
-    first_column = df3.columns[0]
+    first_column2 = df3.columns[0]
     # Delete first
     df3.to_csv('trial.csv', index=False)
-    print(result)
-    print(df3)
-
+    st.dataframe(result)
+    st.dataframe(df3)
     csv_file = os.path.dirname(os.path.realpath(__file__)) + "/trial2.csv"
     vix_csv_file = os.path.dirname(os.path.realpath(__file__)) + "/trial.csv"
 
@@ -184,6 +176,7 @@ def volatility():
 
 def backtestgolden():
     global strategy
+    from goldencrossover import goldencrossover
     ticker=st.sidebar.text_input("Stock ticker", value="AAPL")
     start=st.sidebar.text_input("Start date", value="2018-01-31")
     end=st.sidebar.text_input("End date", value=today)
@@ -225,10 +218,8 @@ def backtestgolden():
     st.pyplot(figure)
     st.subheader(f"{ticker}'s total returns are {returns}% with a {annual_return}% APY")
     strategy=''
-
 def backtestbollinger():
     global strategy
-    from re import L
     import numpy as np
     import pandas as pd
     import pandas_datareader as pdr
@@ -369,7 +360,6 @@ def get_insider():
 
     except Exception as e:
         return e
-
 title="""
     <style>
     .stockify {
@@ -405,10 +395,6 @@ dashboard = st.sidebar.selectbox('', ('Home', 'Fundamental Analysis', 'Technical
 st.title(dashboard)
 st.write('___')
 if dashboard=='Home':
-    file_ = open("C:/Users/Utki/Desktop/code/stock/Picture1.png", "rb")
-    contents = file_.read()
-    data_url = base64.b64encode(contents).decode("utf-8")
-    file_.close()
     st.header('Welcome to Stockify')
     title_alignment2='''
     <style>
@@ -457,8 +443,6 @@ For stocks, fundamental analysis uses revenues, earnings, future growth, return 
         st.write('Financial statements are the medium by which a company discloses information concerning its financial performance. Followers of fundamental analysis use quantitative information gleaned from financial statements to make investment decisions. The three most important financial statements are income statements, balance sheets, and cash flow statements.')
         st.write('')
         st.write('''**Check the fundamentals of any stock by entering the ticker in the sidebar on the next page.**\n''')
-
-        
     elif s_fundament=='Check fundamentals':
         symbol=st.sidebar.text_input("Ticker", value='AAPL', max_chars=10)
         pd.set_option('display.max_colwidth', 25)
@@ -479,14 +463,12 @@ For stocks, fundamental analysis uses revenues, earnings, future growth, return 
         st.write('**When Insiders Buy, Should Investors Join Them?**\n \n')
         st.write('''This question doesn't have any right answers but one could sure speculate based on this information.\n
 Tips for beating the market tend to come and go quickly, but one has held up extremely well: if executives, directors, or others with inside knowledge of a public company are buying or selling shares, investors should consider doing the same thing. Research shows that insider trading activity is a valuable barometer of broad shifts in market and sector sentiment.
-
 However, before chasing each insider move, outsiders need to consider the factors that dictate the timing of trades and the factors that conceal the motivations and also that information is made public after a delay of the transaction made.''')
         st.write('_______________________________________________________________________________________________')
         st.subheader(f'Recent news on {symbol} stock')
         st.write(news)
         st.write('')
         st.write("\nStocks correlate the performance with the current market conditions and business news. They also predict the performance of the stock market and advise on buying and selling of stocks, mutual funds, and other securities.")
-
 if dashboard=='Backtesting':
     strategy = st.sidebar.selectbox("Which Strategy?", ('Intro', 'RSI', 'Volatility', 'Golden Crossover', 'Bollinger Bands'), 0, key='strategy')
     st.header(strategy)
@@ -502,50 +484,7 @@ if dashboard=='Backtesting':
             backtestrsi()
     while strategy=='Volatility':
         volatility()
-        '''ticker = st.sidebar.text_input("Symbol", value='AAPL', max_chars=5)
-        
-        st.write('Why hello there')
-        url = 'https://finviz.com/quote.ashx?t=' + ticker
-        req = Request(url=url,headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0'}) 
-        response = urlopen(req)
-        # Read the contents of the file into 'html'
-        html = BeautifulSoup(response)
-        # Find 'news-table' in the Soup and load it into 'news_table'
-        news_table = html.find(id="chart")
-        st.write(news_table)
-        st.image(f"https://finviz.com/chart.ashx?t={ticker}")
-        st.plotly_chart(news_table)'''
     while strategy=='Golden Crossover':
             backtestgolden()
     while strategy=='Bollinger Bands':
             backtestbollinger()
-    '''
-df = yf.download(tickers=tickers, period = '1y', interval = '1d', rounding= True)
-days=len(df['Close'])
-for i in range(days-1):
-    if df['Close'][i+1]>df['Close'][i]:
-        pass
-fig = go.Figure(data=[go.Candlestick(x=df.index,
-                    open=df['Open'],
-                    high=df['High'],
-                    low=df['Low'],
-                    close=df['Close'])])
-fig.update_layout(
-title='Share price',
-yaxis_title='Stock Price (USD)',
-xaxis_title='Number of days'),
-
-        # X-Axes
-fig.update_xaxes(
-            rangeslider_visible=True,
-            rangeselector=dict(
-                buttons=list([
-                    dict(count=1, label="1m", step="month", stepmode="backward"),
-                    dict(count=3, label="3m", step="month", stepmode="backward"),
-                    dict(count=6, label="6m", step="month", stepmode="backward"),
-                    dict(count=10, label="10m", step="month", stepmode="backward"),
-                    dict(count=1, label="YTD", step="year", stepmode="todate"),
-                    dict(label="Max", step="all")
-                ])
-            ) 
-        )'''
