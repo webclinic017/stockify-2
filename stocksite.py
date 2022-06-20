@@ -445,40 +445,215 @@ with trial[0]:
 dashboard = st.sidebar.selectbox('', ('Home', 'Fundamental Analysis', 'Technical Indicators', 'Backtesting', 'Pattern Stocks'), 0)
 st.title(dashboard)
 st.write('___')
-if dashboard=='Home':
-    st.header('Welcome to Stockify')
-    title_alignment2='''
+if dashboard!='Tradelyne':
+    st.title(dashboard)
+if dashboard=='Tradelyne':
+    logo='''
     <style>
-    .trial {
-    width: 55px;
-    margin-top: -425px;
-    margin-left: 130px;
+    .logo{
+        width: 100%;
+        margin-top:-100px;
+        margin-left:-30px;
     }
     </style>
     <body>
-    <img src="https://img.icons8.com/nolan/344/home-page.png" alt="House" class='trial'></img>
+    <img src='https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/6c46ac13-6a18-427a-9baa-01ad3b53ac45_rw_600.png?h=21b14417887f0576feb32fcbfd191788' alt='logo' class='logo'></img> 
     </body>
     '''
-    image1='''
+    homeimage='''
     <style>
-    .stocks {
-    width: 50px;
-    margin-top: -165px;
-    margin-left: 320px;
+    .homeimg {
+    width: 100%;
+    float: right;
+    margin-top: 0px;
+    z-index: 1;
+    position: relative;
+    border-radius: 10%;
     }
     </style>
     <body>
-    <img src="https://img.icons8.com/external-xnimrodx-lineal-gradient-xnimrodx/344/external-stock-economy-xnimrodx-lineal-gradient-xnimrodx.png" alt="House" class='stocks'></img>
+    <img src="https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/3da6f1b3-6f54-41c3-8643-01aae0b48ef3_rw_1200.png?h=39a23c885e98a256c9f1f14906ee2e68" alt="House" class='homeimg'></img>
     </body>'''
+    fundament='''
+    <style>
+    .faimg {
+    width: 350px;
+    float: center;
+    margin-top: 18px;
+    z-index: 1;
+    position: relative;
+    }
+    </style>
+    <body>
+    <img src="https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/3a56fae1-6ca5-40c6-b6c6-ff39fc47e486_rw_600.png?h=f3306082b779851a92589d8b668951d7" alt="House" class='faimg'></img>
+    </body>'''
+    fundtxt='''
+    <style>
+    .fundtxt {
+        font-size: 25px;
+        margin-top:0px;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    </style>
+    <body>
+    <center> <p1 class='fundtxt'> FUNDAMENTAL ANALYSIS </p1> </center>
+    </body>
+    '''
+    fundsubtxt='''
+    <style>
+    .fundsubtxt {
+        font-size: 15px;
+        margin-top:20px;
+        font-weight: 100;
+        margin-bottom: 0px;
+    }
+    </style>
+    <body>
+    <center> <p1 class='fundsubtxt'> Check the latest fundamentals of a stock just by entering a stock ticker using our fundamental analysis feature. Utilize the information on the recent insider trades and news of the company of your choice to make profits. </p1> </center>
+    </body>
+    '''
+    tech='''
+    <style>
+    .taimg {
+    width: 435px;
+    float: center;
+    z-index: 1;
+    position: relative;
+    border-radius: 5%;
+    }
+    </style>
+    <body>
+    <img src="https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/5627fdb1-f10a-4d6c-b026-7abb76b92aa8_rw_600.png?h=ea32c83843aee2609aa26561a36bb4ea" alt="House" class='taimg'></img>
+    </body>'''
+    techtxt='''
+    <style>
+    .techtxt {
+        font-size: 25px;
+        margin-top:0px;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    </style>
+    <body>
+    <center> <p1 class='techtxt'> TECHNICAL INDICATORS </p1> </center>
+    </body>
+    '''
+    techsubtxt='''
+    <style>
+    .techsubtxt {
+        font-size: 15px;
+        margin-top:20px;
+        font-weight: 100;
+        margin-bottom: 0px;
+    }
+    </style>
+    <body>
+    <center> <p1 class='techsubtxt'> Find the latest patterns emerging within stocks or locate stocks that showcase a recent pattern using our technical indicators feature. </p1> </center>
+    </body>
+    '''
+    backt='''
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    .btimg {
+    float: center;
+    z-index: 1;
+    width: 400px;
+    position: relative;
+    border-radius: 5%;
+    }
+    </style>
+    <body>
+    <center><img src="https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/3c7a6502-fcd7-43ed-bf9b-444bd71825e7_rw_600.png?h=a77fdb06036cb1e327227058b42f4baa" alt="House" class='btimg'></img></center>
+    <p1 class>
+    </body>'''
+    bttxt='''
+    <style>
+    .techtxt {
+        font-size: 25px;
+        margin-top:0px;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    </style>
+    <body>
+    <center> <p1 class='techtxt'> BACKTESTING </p1> </center>
+    </body>
+    '''
+    btsubtxt='''
+    <style>
+    .btsubtxt {
+        font-size: 15px;
+        margin-top:20px;
+        font-weight: 100;
+        margin-bottom: 0px;
+    }
+    </style>
+    <body>
+    <center> <p1 class='btsubtxt'> What if you had invested your money in a stock using a certain startegy? How much profit would you have made? Find out using our backtesting feature which has certain predefined strategies to backtest. </p1> </center>
+    </body>
+    '''
     #st.markdown(f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">', unsafe_allow_html=True,)
-    st.markdown(title_alignment2, unsafe_allow_html=True)
-    st.markdown(image1, unsafe_allow_html=True)
-    st.subheader('What is stockify?')
-    st.write('Stockify is a web application developed on python using the streamlit library which aims to provide you with the tools necessary to make trading and investing much simpler.\n ')
-    st.write('''You can use this web app to do\n
-1. Fundamental Analysis\n
-2. Technical Analysis\n
-3. Backtesting''')
+    #st.markdown(trade_lyne, unsafe_allow_html=True)
+    #st.markdown(slogan, unsafe_allow_html=True)
+    tradelyne,eth=st.columns(2)
+    with tradelyne:
+        st.markdown(logo, unsafe_allow_html=True)
+    with eth: 
+        st.markdown(homeimage, unsafe_allow_html=True)
+    st.write('_______________________________________')
+    #st.text('Get Started')
+    #with st.container():
+    #    st.write('Hi')
+    #    st.write('')
+    fundamental,technical,backtesting=st.columns(3)
+    with fundamental:
+        st.markdown(fundament, unsafe_allow_html=True)
+        st.markdown(fundtxt, unsafe_allow_html=True)
+        st.markdown(fundsubtxt, unsafe_allow_html=True)
+        #st.write('Fundamental Analysis can be done using ')
+        #st.image('https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/4649c3af-7f27-4709-9780-fda372566b4a_rw_1200.png?h=3454dba140a41751142c60641be53ed2', width=450)
+        st.write('______________')
+        
+    with technical:
+        st.markdown(tech, unsafe_allow_html=True)
+        st.markdown(techtxt, unsafe_allow_html=True)
+        st.markdown(techsubtxt, unsafe_allow_html=True)
+        #st.write('Fundamental Analysis can be done using ')
+        #st.image('https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/e62d6401-816c-4134-9879-e02429780e38_rw_1200.png?h=ffdf8eaa2424f3c2ef3249b4e6ad581a', width=450)
+        st.write('______________')
+        #st.write('')
+        #st.header('Technical Analysis')
+        #st.write('Blah')
+    with backtesting:    
+        st.markdown(backt, unsafe_allow_html=True)
+        st.markdown(bttxt, unsafe_allow_html=True)
+        st.markdown(btsubtxt, unsafe_allow_html=True)
+        #st.write('Fundamental Analysis can be done using uUHUghuruuuuuuuuuuuuuuuuuuuuuuuuuuu ')
+        st.write('______________')
+        #st.image('https://cdn.myportfolio.com/fd40c2a8-1f6f-47d7-8997-48ba5415a69c/c24aca21-c03b-4c87-a7d8-25c550fd612c_rw_1200.png?h=1aa84baacad2b04ae4203946bf5ebe78', width=450)
+        #st.write('')
+        #st.header('Backtesting')
+        #st.write('Back')
+    first,second,third=st.columns(3)
+    with first:
+        st.header('Fundamental Analysis')
+        st.write('Blah')
+    with second:
+        pass
+    with third:
+        pass
+    #st.markdown(fundament, unsafe_allow_html=True)
+    #st.markdown(tech, unsafe_allow_html=True)
+    #st.markdown(backt, unsafe_allow_html=True)
+    st.subheader('What is Tradelyne?')
+    st.write('Tradelyne is a web application developed on python using the streamlit library which aims to provide you with the tools necessary to make trading and investing much simpler. Using this web app you can enhance and optimize your investing skills and take advantage of every opportunity presented to you by the market\n ')
+    st.subheader('What can I do on Tradelyne?')
+    st.write('''You can use this web app to do:\n
+1. Fundamental Analysis - Learn and check the fundamentals of various companies and make inferences based on the data provided.\n
+2. Technical Analysis - Read price chart movements and see important indicators to predict the price and make entry and exit positions accordingly.\n
+3. Backtesting - Backtesting answer's your " What if ? " question as to what if you had used xyz strategy on a stock over a period of time. Would you make profits or would it be a loss? Find out using our pre defined strategies in backtesting module.\n''')
+st.write('''**Utilize these features by using the sidebar by opening the menu on mobile.**\n''')
 if dashboard=='Fundamental Analysis':
     s_fundament = st.sidebar.selectbox('What would you like to do?', ('Learn', 'Check fundamentals'), 0)
     if s_fundament=='Learn':
