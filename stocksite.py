@@ -634,8 +634,9 @@ if dashboard=='Tradelyne':
         #st.write('Back')
     first,second,third=st.columns(3)
     with first:
-        st.header('Fundamental Analysis')
-        st.write('Blah')
+        pass
+        #st.header('Fundamental Analysis')
+        #st.write('Blah')
     with second:
         pass
     with third:
