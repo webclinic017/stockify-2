@@ -371,7 +371,7 @@ def get_insider():
         return e
 title="""
     <style>
-    .stockify {
+    .Tradelyne {
     text-align: center;
     margin-top: -100px;
     margin-left: 67px;
@@ -381,12 +381,12 @@ title="""
     }
     </style>
     <body>
-    <p1 class='stockify'>Stockify</p1>
+    <p1 class='Tradelyne'>Tradelyne</p1>
     </body>
     """
 st.sidebar.markdown(title, unsafe_allow_html=True)
 st.sidebar.write('_______________________')
-title_alignment2="""
+trade_lyne="""
     <style>
     .trial2 {
     text-align: center;
@@ -399,7 +399,49 @@ title_alignment2="""
     <h1 class='trial2'>Select your dashboard</h1>
     </body>
     """
-st.sidebar.markdown(title_alignment2, unsafe_allow_html=True)
+st.sidebar.markdown(trade_lyne, unsafe_allow_html=True)
+navbar='''
+    <style>
+    .padding{
+    font-size: 100px;
+    padding: 10px, 20px, 30px;  
+    background-color: green;
+    margin-top: 0px;  
+    margin-left: 200px;
+    }
+    </style>
+    <body>
+    <p1 class='padding'>hidddd</p1>
+    </body>
+'''
+#st.markdown(navbar, unsafe_allow_html=True)
+
+trial=st.columns([1])
+menu_data = [
+    {'icon': "far fa-copy", 'label':"Fundamental analysis"},
+    #{'icon': "fa-solid fa-radar",'label':"Dropdown1   ", 'submenu':[{'id':' subid11','icon': "fa fa-paperclip", 'label':"Sub-item 1"},{'id':'subid12','icon': "💀", 'label':"Sub-item 2"},{'id':'subid13','icon': "fa fa-database", 'label':"Sub-item 3"}]},
+    {'icon': "far fa-chart-bar", 'label':"Technical Indicators"},#no tooltip message
+    #{'id':' Crazy return value 💀','icon': "💀", 'label':"Calendar   "},
+    #{'icon': "fas fa-tachometer-alt", 'label':"Dashboard   ",'ttip':"I'm the Dashboard tooltip!"}, #can add a tooltip message
+    {'icon': "fas fa-tachometer-alt", 'label':"Backtesting"},
+    #{'icon': "fa-solid fa-radar",'label':"Dropdown2", 'submenu':[{'label':"Sub-item 1", 'icon': "fa fa-meh"},{'label':"Sub-item 2"},{'icon':'🙉','label':"Sub-item 3",}]},
+    {'icon': "bi bi-telephone", 'label':"Contact us"},
+]
+
+over_theme = {'txc_inactive': '#FFFFFF'}
+over_theme = {'txc_inactive': "#D3D3D3",'menu_background':'#3948A5','txc_active':'white','option_active':'#3948A5'}
+with trial[0]:
+    dashboard = hc.nav_bar(
+    menu_definition=menu_data,
+    override_theme=over_theme,
+    home_name='Tradelyne',
+    #login_name='Logout',
+    hide_streamlit_markers=True, #will show the st hamburger as well as the navbar now!
+    sticky_nav=True, #at the top or not
+    sticky_mode='sticky', #jumpy or not-jumpy, but sticky or pinned
+    use_animation=True,
+    key='NavBar'
+    )
 dashboard = st.sidebar.selectbox('', ('Home', 'Fundamental Analysis', 'Technical Indicators', 'Backtesting', 'Pattern Stocks'), 0)
 st.title(dashboard)
 st.write('___')
