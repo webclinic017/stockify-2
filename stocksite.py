@@ -442,9 +442,6 @@ with trial[0]:
     use_animation=True,
     key='NavBar'
     )
-dashboard = st.sidebar.selectbox('', ('Home', 'Fundamental Analysis', 'Technical Indicators', 'Backtesting', 'Pattern Stocks'), 0)
-st.title(dashboard)
-st.write('___')
 if dashboard!='Tradelyne':
     st.title(dashboard)
 if dashboard=='Tradelyne':
