@@ -651,7 +651,7 @@ if dashboard=='Tradelyne':
 1. Fundamental Analysis - Learn and check the fundamentals of various companies and make inferences based on the data provided.\n
 2. Technical Analysis - Read price chart movements and see important indicators to predict the price and make entry and exit positions accordingly.\n
 3. Backtesting - Backtesting answer's your " What if ? " question as to what if you had used xyz strategy on a stock over a period of time. Would you make profits or would it be a loss? Find out using our pre defined strategies in backtesting module.\n''')
-st.write('''**Utilize these features by using the sidebar by opening the menu on mobile.**\n''')
+#st.write('''**Utilize these features by using the sidebar by opening the menu on mobile.**\n''')
 if dashboard=='Fundamental Analysis':
     s_fundament = st.sidebar.selectbox('What would you like to do?', ('Learn', 'Check fundamentals'), 0)
     if s_fundament=='Learn':
