@@ -4,6 +4,8 @@ import yfinance as yf
 import pandas as pd
 import pandas_datareader as pdr
 import matplotlib.pyplot as plt
+import plotly.graph_objs as go
+import hydralit_components as hc
 import matplotlib
 import numpy as np
 import warnings
@@ -13,6 +15,7 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as bs
 from rsi import RSIStrategy
 from datetime import date
+st.set_page_config(page_title='Tradelyne', layout="wide",initial_sidebar_state='collapsed')#initial_sidebar_state='collapsed', 
 def fxn():
     warnings.warn("deprecated", DeprecationWarning)
 with warnings.catch_warnings():
