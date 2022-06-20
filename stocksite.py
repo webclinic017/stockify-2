@@ -16,6 +16,12 @@ from bs4 import BeautifulSoup as bs
 from rsi import RSIStrategy
 from datetime import date
 st.set_page_config(page_title='Tradelyne', layout="wide",initial_sidebar_state='collapsed')#initial_sidebar_state='collapsed', 
+hide_menu_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
 def fxn():
     warnings.warn("deprecated", DeprecationWarning)
 with warnings.catch_warnings():
