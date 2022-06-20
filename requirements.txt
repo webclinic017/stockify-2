@@ -1,4 +1,6 @@
 streamlit
+hydrlit_components
+plotly
 backtrader
 yfinance
 pandas
