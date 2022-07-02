@@ -653,7 +653,8 @@ if dashboard=='Tradelyne':
 3. Backtesting - Backtesting answer's your " What if ? " question as to what if you had used xyz strategy on a stock over a period of time. Would you make profits or would it be a loss? Find out using our pre defined strategies in backtesting module.\n''')
 #st.write('''**Utilize these features by using the sidebar by opening the menu on mobile.**\n''')
 if dashboard=='Fundamental Analysis':
-    s_fundament = st.sidebar.selectbox('What would you like to do?', ('Learn', 'Check fundamentals'), 0)
+    s_fundament = st.sidebar.selectbox('What would you like to do?', ('Learn', 'Check fundamentals'), 0, key='fundamentals')
+    
     if s_fundament=='Learn':
         st.subheader('What Is Fundamental Analysis?')
         st.write('''• Fundamental analysis is a method of determining a stock's real or "fair market" value.\n
