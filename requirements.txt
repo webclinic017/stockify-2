@@ -11,8 +11,7 @@ plotly
 gunicorn
 datetime
 quantstats
-pypfopt
-pypfopt.discrete_allocation
+PyPortfolioOpt
 matplotlib==3.2.2
 plotly
 pandas_datareader
