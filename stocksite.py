@@ -665,6 +665,38 @@ if dashboard=='Tradelyne':
 2. Technical Analysis - Read price chart movements and see important indicators to predict the price and make entry and exit positions accordingly.\n
 3. Backtesting - Backtesting answer's your " What if ? " question as to what if you had used xyz strategy on a stock over a period of time. Would you make profits or would it be a loss? Find out using our pre defined strategies in backtesting module.\n''')
 #st.write('''**Utilize these features by using the sidebar by opening the menu on mobile.**\n''')
+if dashboard=='Screener':
+    start_date = st.sidebar.date_input("Start date", datetime.date(2019, 1, 1))
+    end_date = st.sidebar.date_input("End date", datetime.date(2021, 1, 31))
+
+    # Retrieving tickers data
+    ticker_list = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/s-and-p-500-companies/master/data/constituents_symbols.txt')
+    tickerSymbol = st.sidebar.selectbox('Stock ticker', ticker_list) # Select ticker symbol
+    tickerData = yf.Ticker(tickerSymbol) # Get ticker data
+    tickerDf = tickerData.history(period='1d', start=start_date, end=end_date) #get the historical prices for this ticker
+
+    # Ticker information
+    string_logo = '<img src=%s>' % tickerData.info['logo_url']
+    st.markdown(string_logo, unsafe_allow_html=True)
+
+    string_name = tickerData.info['longName']
+    st.header('**%s**' % string_name)
+
+    string_summary = tickerData.info['longBusinessSummary']
+    st.info(string_summary)
+
+    sector=tickerData.info['sector']
+    st.subheader(f"Sector: {sector}")
+    # Ticker data
+    st.header('**Ticker data**')
+    st.write(tickerDf)
+
+    # Bollinger bands
+    st.header('**Bollinger Bands**')
+    qf=cf.QuantFig(tickerDf,title='First Quant Figure',legend='top',name='GS')
+    qf.add_bollinger_bands()
+    fig = qf.iplot(asFigure=True)
+    st.plotly_chart(fig)
 if dashboard=='Portfolio optimizer':
     s = Screener()
     tickers_strings = ''
