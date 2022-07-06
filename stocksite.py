@@ -7,14 +7,25 @@ import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 import hydralit_components as hc
 import matplotlib
+import plotly.express as px
+import plotly.graph_objects as go
 import numpy as np
 import warnings
+from pandas_datareader import data as pdr
+from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
+from pypfopt import EfficientFrontier
+from pypfopt import risk_models
+from pypfopt import expected_returns
+from pypfopt import plotting
+from pypfopt import objective_functions
 from matplotlib import warnings
 from matplotlib.dates import (HOURS_PER_DAY, MIN_PER_HOUR, SEC_PER_MIN)
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as bs
 from rsi import RSIStrategy
 from datetime import date
+from datetime import datetime
+from yahooquery import Screener
 st.set_page_config(page_title='Tradelyne', layout="wide",initial_sidebar_state='collapsed')#initial_sidebar_state='collapsed', 
 hide_menu_style = """
         <style>
@@ -665,7 +676,7 @@ if dashboard=='Portfolio optimizer':
     for i in range(len(sectornames)):
         sectordict[sectornames[i]]=portfolioinp[i]
 
-    yfin.pdr_override()
+    yf.pdr_override()
     def plot_cum_returns(data, title):    
         daily_cum_returns = 1 + data.dropna().pct_change()
         daily_cum_returns = daily_cum_returns.cumprod()*100
