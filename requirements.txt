@@ -17,4 +17,4 @@ plotly
 pandas_datareader
 io
 hydralit
-
+yahooquery
