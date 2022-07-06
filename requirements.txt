@@ -11,6 +11,10 @@ plotly
 gunicorn
 datetime
 quantstats
+pypfopt
 matplotlib==3.2.2
+plotly
+pandas_datareader
+io
 hydralit
 
