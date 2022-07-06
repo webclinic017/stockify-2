@@ -9,7 +9,6 @@ urllib3
 bs4
 plotly
 pandas_datareader
-io
 hydralit
 yahooquery
 datetime
