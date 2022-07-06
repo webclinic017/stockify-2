@@ -418,6 +418,7 @@ navbar='''
 
 trial=st.columns([1])
 menu_data = [
+    {'icon': "bi bi-laptop", 'label':"Screener"},
     {'icon': "far fa-copy", 'label':"Fundamental analysis"},
     #{'icon': "fa-solid fa-radar",'label':"Dropdown1   ", 'submenu':[{'id':' subid11','icon': "fa fa-paperclip", 'label':"Sub-item 1"},{'id':'subid12','icon': "💀", 'label':"Sub-item 2"},{'id':'subid13','icon': "fa fa-database", 'label':"Sub-item 3"}]},
     {'icon': "far fa-chart-bar", 'label':"Technical Indicators"},#no tooltip message
@@ -425,6 +426,7 @@ menu_data = [
     #{'icon': "fas fa-tachometer-alt", 'label':"Dashboard   ",'ttip':"I'm the Dashboard tooltip!"}, #can add a tooltip message
     {'icon': "fas fa-tachometer-alt", 'label':"Backtesting"},
     #{'icon': "fa-solid fa-radar",'label':"Dropdown2", 'submenu':[{'label':"Sub-item 1", 'icon': "fa fa-meh"},{'label':"Sub-item 2"},{'icon':'🙉','label':"Sub-item 3",}]},
+    {'icon': "bi bi-pie-chart", 'label':"Portfolio Optimizer"},
     {'icon': "bi bi-telephone", 'label':"Contact us"},
 ]
 
