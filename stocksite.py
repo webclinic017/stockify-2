@@ -770,7 +770,7 @@ if dashboard=='Portfolio Optimizer':
         tickers_string = st.text_input('Enter all stock tickers to be included in portfolio separated by commas \
                                     WITHOUT spaces, e.g. "MA,FB,V,AMZN,JPM,BA"', value=tickers_strings).upper()
     tickers = tickers_string.split(',')
-    try:
+    if dashboard=='Portfolio Optimizer':
         # Get Stock Prices using pandas_datareader Library	
         stocks_df = pdr.get_data_yahoo(tickers, start = start_date, end = end_date)['Adj Close']
         sp500=pdr.get_data_yahoo('SPY', start = start_date, end = end_date)['Adj Close']
@@ -889,7 +889,7 @@ if dashboard=='Portfolio Optimizer':
         with col2:
             st.subheader('Cumulative Returns of Stocks Starting with $100')
             st.plotly_chart(fig_cum_returns)	
-    except:
+    else:
         st.write('Enter correct stock tickers to be included in portfolio separated\
         by commas WITHOUT spaces, e.g. "MA,FB,V,AMZN,JPM,BA"and hit Enter.')
         
