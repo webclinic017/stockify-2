@@ -28,6 +28,7 @@ from datetime import date
 from datetime import datetime
 from yahooquery import Screener
 import cufflinks as cf
+import copy
 st.set_page_config(page_title='Tradelyne', layout="wide",initial_sidebar_state='collapsed')#initial_sidebar_state='collapsed', 
 hide_menu_style = """
         <style>
