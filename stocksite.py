@@ -13,14 +13,14 @@ import numpy as np
 import datetime
 import warnings
 from pandas_datareader import data as pdr
-#from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
+from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
 from pypfopt import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import expected_returns
 from pypfopt import plotting
 from pypfopt import objective_functions
 from matplotlib import warnings
-#from matplotlib.dates import (HOURS_PER_DAY, MIN_PER_HOUR, SEC_PER_MIN)
+from matplotlib.dates import (HOURS_PER_DAY, MIN_PER_HOUR, SEC_PER_MIN)
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as bs
 from rsi import RSIStrategy
@@ -667,7 +667,7 @@ if dashboard=='Tradelyne':
 3. Backtesting - Backtesting answer's your " What if ? " question as to what if you had used xyz strategy on a stock over a period of time. Would you make profits or would it be a loss? Find out using our pre defined strategies in backtesting module.\n''')
 #st.write('''**Utilize these features by using the sidebar by opening the menu on mobile.**\n''')
 if dashboard=='Screener':
-    start_date = st.sidebar.date_input("Start date", datetime.date(2019, 1, 1))
+    start_date = st.sidebar.date_input("Start date", datetime.date('2019', '1', '1'))
     end_date = st.sidebar.date_input("End date", datetime.date(2021, 1, 31))
 
     # Retrieving tickers data
