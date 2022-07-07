@@ -772,7 +772,7 @@ if dashboard=='Portfolio Optimizer':
         tickers_string = st.text_input('Enter all stock tickers to be included in portfolio separated by commas \
                                     WITHOUT spaces, e.g. "MA,FB,V,AMZN,JPM,BA"', value=tickers_strings).upper()
     tickers = tickers_string.split(',')
-    if dashboard=='Portfolio Optimizer':
+    try:
         # Get Stock Prices using pandas_datareader Library	
         stocks_df = pdr.get_data_yahoo(tickers, start = start_date, end = end_date)['Adj Close']
         sp500=pdr.get_data_yahoo('SPY', start = start_date, end = end_date)['Adj Close']
@@ -781,20 +781,15 @@ if dashboard=='Portfolio Optimizer':
             # Plot Individual Cumulative Returns
         fig_cum_returns = plot_cum_returns(stocks_df, '')
             # Calculatge and Plot Correlation Matrix between Stocks
-        st.write(1)
         corr_df = stocks_df.corr().round(2)
         fig_corr = px.imshow(corr_df, text_auto=True)
             # Calculate expected returns and sample covariance matrix for portfolio optimization later
         mu = expected_returns.mean_historical_return(stocks_df)
         S = risk_models.sample_cov(stocks_df)
-        st.write(1)
             # Plot efficient frontier curve
         fig = plot_efficient_frontier_and_max_sharpe(mu, S)
-        st.write(1)
         fig_efficient_frontier = BytesIO()
-        st.write(2)
         fig.savefig(fig_efficient_frontier, format="png")
-        st.write(2)
             # Get optimized weights
         ef = EfficientFrontier(mu, S)
         ef.add_objective(objective_functions.L2_reg, gamma=0.1)
@@ -805,7 +800,6 @@ if dashboard=='Portfolio Optimizer':
         weights_df.columns = ['weights']  
             # Calculate returns of portfolio with optimized weights
         stocks_df['Optimized Portfolio'] = 0
-        st.write(1)
         for ticker, weight in weights.items():
                 stocks_df['Optimized Portfolio'] += stocks_df[ticker]*weight
             
@@ -815,7 +809,6 @@ if dashboard=='Portfolio Optimizer':
         da = DiscreteAllocation(weights, latest_prices, total_portfolio_value=100000)
         allocation, leftover = da.greedy_portfolio()
         print(allocation, leftover)
-        st.write(1)
                 # Display everything on Streamlit
         st.subheader("Your Portfolio Consists of: {} Stocks".format(tickers_string))
         col1,col2=st.columns([1.3,1])
@@ -891,7 +884,7 @@ if dashboard=='Portfolio Optimizer':
         with col2:
             st.subheader('Cumulative Returns of Stocks Starting with $100')
             st.plotly_chart(fig_cum_returns)	
-    else:
+    except:
         st.write('Enter correct stock tickers to be included in portfolio separated\
         by commas WITHOUT spaces, e.g. "MA,FB,V,AMZN,JPM,BA"and hit Enter.')
         
