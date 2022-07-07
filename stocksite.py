@@ -771,27 +771,25 @@ if dashboard=='Portfolio Optimizer':
                                     WITHOUT spaces, e.g. "MA,FB,V,AMZN,JPM,BA"', value=tickers_strings).upper()
     tickers = tickers_string.split(',')
     try:
-        st.write(1)
         # Get Stock Prices using pandas_datareader Library	
         stocks_df = pdr.get_data_yahoo(tickers, start = start_date, end = end_date)['Adj Close']
         sp500=pdr.get_data_yahoo('SPY', start = start_date, end = end_date)['Adj Close']
-        st.write(1)
             # Plot Individual Stock Prices
         fig_price = px.line(stocks_df, title='')
             # Plot Individual Cumulative Returns
         fig_cum_returns = plot_cum_returns(stocks_df, '')
             # Calculatge and Plot Correlation Matrix between Stocks
+        st.write(1)
         corr_df = stocks_df.corr().round(2)
         fig_corr = px.imshow(corr_df, text_auto=True)
             # Calculate expected returns and sample covariance matrix for portfolio optimization later
         mu = expected_returns.mean_historical_return(stocks_df)
         S = risk_models.sample_cov(stocks_df)
-            
+        st.write(1)
             # Plot efficient frontier curve
         fig = plot_efficient_frontier_and_max_sharpe(mu, S)
         fig_efficient_frontier = BytesIO()
         fig.savefig(fig_efficient_frontier, format="png")
-        st.write(1)
             # Get optimized weights
         ef = EfficientFrontier(mu, S)
         ef.add_objective(objective_functions.L2_reg, gamma=0.1)
