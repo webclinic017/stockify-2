@@ -25,6 +25,7 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as bs
 from rsi import RSIStrategy
 from datetime import date
+from datetime import datetime
 from yahooquery import Screener
 import cufflinks as cf
 st.set_page_config(page_title='Tradelyne', layout="wide",initial_sidebar_state='collapsed')#initial_sidebar_state='collapsed', 
@@ -667,8 +668,8 @@ if dashboard=='Tradelyne':
 3. Backtesting - Backtesting answer's your " What if ? " question as to what if you had used xyz strategy on a stock over a period of time. Would you make profits or would it be a loss? Find out using our pre defined strategies in backtesting module.\n''')
 #st.write('''**Utilize these features by using the sidebar by opening the menu on mobile.**\n''')
 if dashboard=='Screener':
-    start_date = st.sidebar.date_input("Start date", datetime.date(2019, 1, 1))
-    end_date = st.sidebar.date_input("End date", datetime.date(2021, 1, 31))
+    start_date = st.sidebar.date_input("Start date", date(2019, 1, 1))
+    end_date = st.sidebar.date_input("End date", date(2021, 1, 31))
 
     # Retrieving tickers data
     ticker_list = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/s-and-p-500-companies/master/data/constituents_symbols.txt')
@@ -743,7 +744,7 @@ if dashboard=='Portfolio Optimizer':
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        start_date = st.date_input("Start Date",datetime.datetime(2015, 1, 1))
+        start_date = st.date_input("Start Date",datetime(2015, 1, 1))
         
     with col2:
         end_date = st.date_input("End Date") # it defaults to current date
@@ -770,9 +771,11 @@ if dashboard=='Portfolio Optimizer':
                                     WITHOUT spaces, e.g. "MA,FB,V,AMZN,JPM,BA"', value=tickers_strings).upper()
     tickers = tickers_string.split(',')
     try:
+        st.write(1)
         # Get Stock Prices using pandas_datareader Library	
         stocks_df = pdr.get_data_yahoo(tickers, start = start_date, end = end_date)['Adj Close']
         sp500=pdr.get_data_yahoo('SPY', start = start_date, end = end_date)['Adj Close']
+        st.write(1)
             # Plot Individual Stock Prices
         fig_price = px.line(stocks_df, title='')
             # Plot Individual Cumulative Returns
@@ -788,7 +791,7 @@ if dashboard=='Portfolio Optimizer':
         fig = plot_efficient_frontier_and_max_sharpe(mu, S)
         fig_efficient_frontier = BytesIO()
         fig.savefig(fig_efficient_frontier, format="png")
-            
+        st.write(1)
             # Get optimized weights
         ef = EfficientFrontier(mu, S)
         ef.add_objective(objective_functions.L2_reg, gamma=0.1)
@@ -799,6 +802,7 @@ if dashboard=='Portfolio Optimizer':
         weights_df.columns = ['weights']  
             # Calculate returns of portfolio with optimized weights
         stocks_df['Optimized Portfolio'] = 0
+        st.write(1)
         for ticker, weight in weights.items():
                 stocks_df['Optimized Portfolio'] += stocks_df[ticker]*weight
             
@@ -808,6 +812,7 @@ if dashboard=='Portfolio Optimizer':
         da = DiscreteAllocation(weights, latest_prices, total_portfolio_value=100000)
         allocation, leftover = da.greedy_portfolio()
         print(allocation, leftover)
+        st.write(1)
                 # Display everything on Streamlit
         st.subheader("Your Portfolio Consists of: {} Stocks".format(tickers_string))
         col1,col2=st.columns([1.3,1])
