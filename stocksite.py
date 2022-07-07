@@ -10,6 +10,7 @@ import matplotlib
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import datetime
 import warnings
 from pandas_datareader import data as pdr
 #from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
@@ -697,7 +698,7 @@ if dashboard=='Screener':
     qf.add_bollinger_bands()
     fig = qf.iplot(asFigure=True)
     st.plotly_chart(fig)
-if dashboard=='Portfolio optimizer':
+if dashboard=='Portfolio Optimizer':
     s = Screener()
     tickers_strings = ''
     count=0
