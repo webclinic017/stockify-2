@@ -25,7 +25,6 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as bs
 from rsi import RSIStrategy
 from datetime import date
-from datetime import datetime
 from yahooquery import Screener
 st.set_page_config(page_title='Tradelyne', layout="wide",initial_sidebar_state='collapsed')#initial_sidebar_state='collapsed', 
 hide_menu_style = """
