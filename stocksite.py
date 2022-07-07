@@ -788,8 +788,11 @@ if dashboard=='Portfolio Optimizer':
         st.write(1)
             # Plot efficient frontier curve
         fig = plot_efficient_frontier_and_max_sharpe(mu, S)
+        st.write(1)
         fig_efficient_frontier = BytesIO()
+        st.write(2)
         fig.savefig(fig_efficient_frontier, format="png")
+        st.write(2)
             # Get optimized weights
         ef = EfficientFrontier(mu, S)
         ef.add_objective(objective_functions.L2_reg, gamma=0.1)
