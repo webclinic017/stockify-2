@@ -65,7 +65,7 @@ def backtestrsi():
     month=end[1]-start[1]
     day=end[2]-start[2]
     totalyear=year+(month/12)+(day/365)
-    matplotlib.use('Agg')
+    #matplotlib.use('Agg')
     cerebro.adddata(data)
 
     cerebro.addstrategy(RSIStrategy)
