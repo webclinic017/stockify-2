@@ -27,7 +27,7 @@ from rsi import RSIStrategy
 from datetime import date
 from datetime import datetime
 from yahooquery import Screener
-import cufflinks as cf
+#import cufflinks as cf
 import copy
 from io import BytesIO
 st.set_page_config(page_title='Tradelyne', layout="wide",initial_sidebar_state='collapsed')#initial_sidebar_state='collapsed', 
@@ -65,7 +65,7 @@ def backtestrsi():
     month=end[1]-start[1]
     day=end[2]-start[2]
     totalyear=year+(month/12)+(day/365)
-    #matplotlib.use('Agg')
+    matplotlib.use('Agg')
     cerebro.adddata(data)
 
     cerebro.addstrategy(RSIStrategy)
