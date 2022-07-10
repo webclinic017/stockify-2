@@ -13,7 +13,6 @@ hydralit
 yahooquery
 datetime
 PyPortfolioOpt
-cufflinks
 matplotlib==3.2.2
 gunicorn
 
