@@ -45,7 +45,7 @@ with warnings.catch_warnings():
 st.set_option('deprecation.showPyplotGlobalUse', False)
 today=date.today()
 def backtestrsi():
-    global strategy
+    '''global strategy
     ticker=st.sidebar.text_input("Stock ticker", value="AAPL")
     start=st.sidebar.text_input("Start date", value="2018-01-31")
     end=st.sidebar.text_input("End date", value=today)
@@ -88,7 +88,148 @@ def backtestrsi():
     st.write('')
     st.subheader(f"{ticker}'s total returns are {returns}% with a {annual_return}% APY")
     strategy=''
+    '''
+    global strategy
+    s1,s2,s3,s4=st.columns(4)
+    with s1:
+        ticker=st.text_input("Stock ticker", value="AAPL")
+    with s2:
+        start=st.text_input("Start date", value="2018-01-31")
+    with s3:
+        end=st.text_input("End date", value=today)
+    with s4:
+        cash=st.text_input("Starting cash", value=10000)
+    cash=int(cash)
+    cerebro=bt.Cerebro()
+    cerebro.broker.set_cash(cash)
+    start_value=cash
+    data = bt.feeds.PandasData(dataname=yf.download(ticker, start, end))
+    start=start.split("-")
+    end=end.split("-")
+    for i in range(len(start)):
+        start[i]=int(start[i])
+    for j in range(len(end)):
+        end[j]=int(end[j])
+    year=end[0]-start[0]
+    month=end[1]-start[1]
+    day=end[2]-start[2]
+    totalyear=year+(month/12)+(day/365)
+    matplotlib.use('Agg')
+    cerebro.adddata(data)
 
+    cerebro.addstrategy(RSIStrategy)
+    cerebro.addanalyzer(bt.analyzers.PyFolio ,_name='pf')
+    cerebro.addanalyzer(bt.analyzers.PeriodStats, _name='cm')
+    cerebro.addanalyzer(bt.analyzers.DrawDown, _name='dd')
+    cerebro.addanalyzer(bt.analyzers.VWR, _name='vwr')
+    cerebro.addanalyzer(bt.analyzers.SQN, _name='sqn')
+    cerebro.addanalyzer(bt.analyzers.TradeAnalyzer ,_name='ta')
+    cerebro.addanalyzer(bt.analyzers.SharpeRatio ,_name='sr')
+
+    print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
+
+    stratdd=cerebro.run()
+    print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
+
+    #back=Backtest(data, RSIStrategy, cash=10000)
+    #stats=back.run()
+    strat0 = stratdd[0]
+    pyfolio = strat0.analyzers.getbyname('pf')
+    returnss, positions, transactions, gross_lev,  = pyfolio.get_pf_items()
+    final_value=cerebro.broker.getvalue()
+    final_value=round(final_value, 2)
+    returns=(final_value-start_value)*100/start_value
+    annual_return=returns/totalyear
+    returns=str(round(returns, 2))
+    annual_return=str(round(annual_return,2))
+    figure = cerebro.plot(style='line')[0][0]
+    graph, info=st.columns([2,1])
+    print(stratdd[0].analyzers.dd.get_analysis())
+    with graph:
+        st.pyplot(figure)
+    with info:
+        trade=stratdd[0].analyzers.ta.get_analysis()
+        tra=''
+        trade=stratdd[0].analyzers.ta.get_analysis()
+                #x=trade[i]
+                #for i in x:
+                #    tra=tra+(i.upper(), ':', x[i])
+                #    st.write(tra)
+        print(trade)
+        #st.write(trade)
+        if int(start_value)<=int(final_value):
+            fig = go.Figure(go.Indicator(
+            mode = "gauge+number+delta",
+            value = final_value,
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            title = {'text': "Strategy returns"},
+            delta = {'reference': start_value, 'increasing': {'color': "royalblue"}},
+            gauge={'axis': {'range': [None, final_value*6/5], 'tickwidth': 1, 'tickcolor': "green"},
+                'bar': {'color': "green"},
+                'steps': [
+                    {'range': [0, start_value], 'color': '#D3D3D3'},
+                    {'range': [start_value, final_value], 'color': 'royalblue'}],}
+            ))
+            fig.update_layout(paper_bgcolor = "white", font = {'color': "black", 'family': "Arial"}, width=500, height=500,)
+            st.plotly_chart(fig, width=5)
+        else:
+            fig = go.Figure(go.Indicator(
+            mode = "gauge+number+delta",
+            value = final_value,
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            title = {'text': "Strategy returns"},
+            delta = {'reference': start_value, 'decreasing': {'color': "black"}},
+            gauge={'axis': {'range': [None, start_value*6/5], 'tickwidth': 1, 'tickcolor': "red"},
+                'bar': {'color': "red"},
+                'steps': [
+                    {'range': [0, start_value], 'color': 'white'},
+                    {'range': [final_value, start_value], 'color': '#D3D3D3'}],}
+            ))
+            fig.update_layout(paper_bgcolor = "white", font = {'color': "black", 'family': "Arial"}, width=500, height=500)
+            st.image(fig)
+            st.plotly_chart(fig)
+        #st.subheader('Total returns: ', f"{returns}")
+        #st.subheader('Annual returns: ', f"{annual_return}")
+        st.subheader(f"{ticker}'s total returns are {returns}% with a {annual_return}% APY")
+        st.subheader(f'Initial investment: {cash}')
+        st.subheader(f'Final investment value: {final_value}')
+        sr=stratdd[0].analyzers.sr.get_analysis()
+        print(sr)
+        for i in sr:
+            ratio=sr[i]
+        ratio=str(round(ratio, 3))
+        print(ratio)
+        st.subheader(f'Sharpe Ratio: {ratio}')
+        dd=stratdd[0].analyzers.dd.get_analysis()
+        max=dd['max']
+        print(max)
+        #max=max[1]
+        drawdown='Drawdown Stats: \n'
+        for i in max:
+            max[i]=str(round(max[i], 3))
+            drawdown=f"{drawdown} {i} : {max[i]}  |    "
+        print(drawdown)
+        st.subheader(drawdown)
+        st.subheader('Trade Details')
+        for i in trade:
+            if i=='total' or i=='pnl' or i=='streak' or i=='lost' or i=='won':
+                if i=='pnl':
+                    pass
+                    for j in i:
+                        pass
+                x=str(trade[i])
+                for k in "[]()''":
+                    x=x.replace(k, '')
+                x=x.replace('AutoOrderedDict', '')
+                st.write(i,x)
+    st.write('')
+    st.subheader(f"{ticker}'s total returns are {returns}% with a {annual_return}% APY")
+    #final_value=round(returns, 2)
+    st.write(f'Initial investment: {cash}')
+    st.write(f'Final money: {final_value}')
+    st.write(stratdd[0].analyzers.sr.get_analysis())
+    #st.write(stats)
+    strategy=''
 def volatility():
     global strategy
     import backtrader as bt
