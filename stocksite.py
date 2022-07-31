@@ -232,12 +232,7 @@ def backtestrsi():
     strategy=''
 def volatility():
     global strategy
-    import backtrader as bt
-    import os
     from VIXStrategy import VIXStrategy
-    import yfinance as yf
-    import pandas as pd
-    global ticker
     ticker=st.sidebar.text_input("Stock ticker", value="AAPL")
     start=st.sidebar.text_input("Start date", value="2018-01-31")
     end=st.sidebar.text_input("End date", value=today)
